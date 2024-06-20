@@ -1,5 +1,5 @@
 [package]
-name = "eth-keystore"
+name = "eth-bn254-keystore"
 version = "0.5.0"
 authors = ["Rohit Narurkar <rohit.narurkar@protonmail.com>"]
 edition = "2018"

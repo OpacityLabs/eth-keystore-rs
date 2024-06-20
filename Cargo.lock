@@ -133,7 +133,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "eth-keystore"
+name = "eth-bn254-keystore"
 version = "0.5.0"
 dependencies = [
  "aes",
