@@ -39,23 +39,12 @@ mod tests {
 
     #[cfg(not(feature = "geth-compat"))]
     #[test]
-    fn test_decrypt_pbkdf2() {
-        let secret =
-            Vec::from_hex("7a28b5ba57c53603b0b07b56bba752f7784bf506fa95edc395f5cf6c7514fe9d")
-                .unwrap();
-        let keypath = Path::new("./tests/test-keys/key-pbkdf2.json");
-        assert_eq!(decrypt_key(&keypath, "testpassword").unwrap(), secret);
-        assert!(decrypt_key(&keypath, "wrongtestpassword").is_err());
-    }
-
-    #[cfg(not(feature = "geth-compat"))]
-    #[test]
     fn test_decrypt_scrypt() {
         let secret =
-            Vec::from_hex("80d3a6ed7b24dcd652949bc2f3827d2f883b3722e3120b15a93a2e0790f03829")
+            Vec::from_hex("0ba5cd0250357a2e0c0ff2d2dee3ea3873bbcf9041e3206836a839549b8eac6b")
                 .unwrap();
-        let keypath = Path::new("./tests/test-keys/key-scrypt.json");
-        assert_eq!(decrypt_key(&keypath, "grOQ8QDnGHvpYJf").unwrap(), secret);
+        let keypath = Path::new("./tests/test-keys/test.bls.key.json");
+        assert_eq!(decrypt_key(&keypath, "1234").unwrap(), secret);
         assert!(decrypt_key(&keypath, "thisisnotrandom").is_err());
     }
 

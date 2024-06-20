@@ -9,12 +9,9 @@ use ethereum_types::H160 as Address;
 /// This struct represents the deserialized form of an encrypted JSON keystore based on the
 /// [Web3 Secret Storage Definition](https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition).
 pub struct EthKeystore {
-    #[cfg(feature = "geth-compat")]
-    pub address: Address,
-
+    // #[cfg(feature = "geth-compat")]
+    // pub pub_key: String,
     pub crypto: CryptoJson,
-    pub id: Uuid,
-    pub version: u8,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -138,16 +135,9 @@ mod tests {
                     "salt" : "ae3cd4e7013836a3df6bd7241b12db061dbe2c6785853cce422d148a624ce0bd"
                 },
                 "mac" : "517ead924a9d0dc3124507e3393d175ce3ff7c1e96529c6c555ce9e51205e9b2"
-            },
-            "id" : "3198bc9c-6672-5ab3-d995-4942343ae5b6",
-            "version" : 3
+            }
         }"#;
         let keystore: EthKeystore = serde_json::from_str(data).unwrap();
-        assert_eq!(keystore.version, 3);
-        assert_eq!(
-            keystore.id,
-            Uuid::parse_str("3198bc9c-6672-5ab3-d995-4942343ae5b6").unwrap()
-        );
         assert_eq!(keystore.crypto.cipher, "aes-128-ctr");
         assert_eq!(
             keystore.crypto.cipherparams.iv,
@@ -198,16 +188,9 @@ mod tests {
                     "salt" : "ab0c7876052600dd703518d6fc3fe8984592145b591fc8fb5c6d43190334ba19"
                 },
                 "mac" : "2103ac29920d71da29f15d75b4a16dbe95cfd7ff8faea1056c33131d846e3097"
-            },
-            "id" : "3198bc9c-6672-5ab3-d995-4942343ae5b6",
-            "version" : 3
+            }
         }"#;
         let keystore: EthKeystore = serde_json::from_str(data).unwrap();
-        assert_eq!(keystore.version, 3);
-        assert_eq!(
-            keystore.id,
-            Uuid::parse_str("3198bc9c-6672-5ab3-d995-4942343ae5b6").unwrap()
-        );
         assert_eq!(keystore.crypto.cipher, "aes-128-ctr");
         assert_eq!(
             keystore.crypto.cipherparams.iv,

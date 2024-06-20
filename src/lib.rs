@@ -6,6 +6,8 @@ use aes::{
     cipher::{self, InnerIvInit, KeyInit, StreamCipherCore},
     Aes128,
 };
+
+use bn254::{PrivateKey, PublicKey, ECDSA};
 use digest::{Digest, Update};
 use hmac::Hmac;
 use pbkdf2::pbkdf2;
@@ -16,6 +18,7 @@ use sha3::Keccak256;
 use uuid::Uuid;
 
 use std::{
+    convert::TryFrom,
     fs::File,
     io::{Read, Write},
     path::Path,
@@ -230,10 +233,11 @@ where
         id.to_string()
     };
 
+    // let private_key = PrivateKey::try_from(key.as_ref()).unwrap();
+    // let public_key = PublicKey::from_private_key(&private_key);
+
     // Construct and serialize the encrypted JSON keystore.
     let keystore = EthKeystore {
-        id,
-        version: 3,
         crypto: CryptoJson {
             cipher: String::from(DEFAULT_CIPHER),
             cipherparams: CipherparamsJson { iv },
@@ -248,8 +252,6 @@ where
             },
             mac: mac.to_vec(),
         },
-        #[cfg(feature = "geth-compat")]
-        address: address_from_pk(&pk)?,
     };
     let contents = serde_json::to_string(&keystore)?;
 
